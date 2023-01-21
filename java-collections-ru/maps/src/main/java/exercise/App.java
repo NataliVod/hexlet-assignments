@@ -30,6 +30,9 @@ class App {
         return  result;
     }
     public static String toString (Map<String, Integer> words) {
+        if (words.size() == 0) {
+            return "{}";
+        }
         StringBuilder result = new StringBuilder("{\n");
         for (Map.Entry<String, Integer> word: words.entrySet() ) {
             result.append ("  " + word.getKey() + ": " + word.getValue() + "\n");
