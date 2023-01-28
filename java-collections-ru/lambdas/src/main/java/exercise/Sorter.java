@@ -15,9 +15,9 @@ class Sorter {
                 .map(user -> user.get("name"))
                 .collect(Collectors.toList());
     }
-        private static LocalDate getLocalDate (Map<String, String> user) {
+    private static LocalDate getLocalDate(Map<String, String> user) {
         var birthday = user.get("birthday");
-        String birthdayArray[] = birthday.split("-");
+        String[] birthdayArray = birthday.split("-");
         var year = Integer.parseInt(birthdayArray[0]);
         var month = Integer.parseInt(birthdayArray[1]);
         var day = Integer.parseInt(birthdayArray[2]);
