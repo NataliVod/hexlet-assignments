@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 // BEGIN
-/*class AppTest {
+class AppTest {
     @Test
     void testEnlargeArrayImage() {
         String[][] testArray = {

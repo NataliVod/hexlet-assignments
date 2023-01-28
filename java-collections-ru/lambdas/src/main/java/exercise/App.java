@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 // BEGIN
-/*class App {
+class App {
 
     public static String[][] enlargeArrayImage(String[][] image) {
         return Arrays.stream(image)
-                .flatMap(Stream::of)
-                .map(str -> new String[]{str, str})
-                .flatMap(Stream::of)
-                .toArray(String[][]::new);
+                .map(row -> Arrays.stream(row)
+                        .flatMap(x -> Stream.of(x,x))
+                        .toArray(String[]::new))
+                        .flatMap(y -> Stream.of(y,y))
+                        .toArray(String[][]::new);
     }
 }
 // END
