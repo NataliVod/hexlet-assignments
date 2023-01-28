@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 // BEGIN
-class App {
+/*class App {
 
     public static String[][] enlargeArrayImage(String[][] image) {
         return Arrays.stream(image)
