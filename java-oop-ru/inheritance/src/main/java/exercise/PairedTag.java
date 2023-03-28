@@ -6,8 +6,17 @@ import java.util.List;
 
 // BEGIN
 public class PairedTag extends Tag {
-    String tagBody;
-    List<Tag> children;
+    private String tagBody;
+    private List<Tag> children;
+
+    public String getTagBody() {
+        return tagBody;
+    }
+
+    public List getChildren() {
+        return children;
+    }
+
 
     public PairedTag(String tagName, Map<String, String> attributes, String tagBody, List<Tag> children) {
         super(tagName, attributes);
@@ -17,19 +26,24 @@ public class PairedTag extends Tag {
     @Override
     public String toString(){
         StringBuilder result = new StringBuilder();
-        result.append("<").append(tagName).append(" ");
-        for (var attribute : attributes.entrySet()) {
-            result.append(attribute.getKey()).append("=\"").append(attribute.getValue()).append("\" ");
+        result.append("<").append(getTagName()).append(getAttrubuteString())
+                .append(">").append(tagBody).append(getChildString())
+                .append("</").append(getTagName()).append(">");
+        return result.toString();
+    }
+
+    private String getChildString() {
+        if (children == null || children.size() ==0) {
+            return "";
         }
-        int length = result.length();
-        result.delete(length - 1, length);
-        result.append(">").append(tagBody);
+        StringBuilder result = new StringBuilder();
+        if (!tagBody.equals("")) {
+            result.append(" ");
+        }
         for (var child: children){
             result.append(child.toString());
         }
-        result.append("</").append(tagName).append(">");
-
-        return result.toString();
+        return result + "";
     }
 }
 // END

@@ -12,11 +12,8 @@ public class SingleTag extends Tag{
 @Override
     public String toString(){
     StringBuilder result = new StringBuilder();
-    result.append("<").append(tagName).append(" ");
-    for (var attribute : attributes.entrySet()) {
-        result.append(attribute.getKey()).append("=\"").append(attribute.getValue()).append("\" ");
-    }
-    return result.toString().trim() + ">";
+    result.append("<").append(getTagName()).append(getAttrubuteString());
+    return (result + "").trim() + ">";
     }
 }
 // END
