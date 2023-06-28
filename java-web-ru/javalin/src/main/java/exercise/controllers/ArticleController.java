@@ -1,4 +1,5 @@
 package exercise.controllers;
+import io.javalin.http.Context;
 
 import io.javalin.http.Handler;
 import io.ebean.PagedList;
@@ -28,6 +29,7 @@ public final class ArticleController {
         ctx.attribute("articles", articles);
         ctx.attribute("page", page);
         ctx.render("articles/index.html");
+        removeFlashMessage(ctx);
     };
 
     public static Handler newArticle = ctx -> {
@@ -83,7 +85,6 @@ public final class ArticleController {
         Category category = new QCategory()
                 .id.equalTo(categoryId)
                 .findOne();
-
         new QArticle()
                 .id.equalTo(id)
                 .asUpdate()
@@ -110,13 +111,15 @@ public final class ArticleController {
     public static Handler destroyArticle = ctx -> {
         // BEGIN
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
-
         new QArticle()
                 .id.equalTo(id)
                 .delete();
-
         ctx.sessionAttribute("flash", "Статья успешно удалена");
         ctx.redirect("/articles");
         // END
     };
+
+    private static void removeFlashMessage(Context ctx) {
+        ctx.sessionAttribute("flash", null);
+    }
 }

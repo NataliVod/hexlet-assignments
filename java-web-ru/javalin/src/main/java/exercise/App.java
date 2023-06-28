@@ -2,7 +2,7 @@ package exercise;
 
 // Импортируем зависимости, необходимые для работы приложения
 import io.javalin.Javalin;
-import io.javalin.plugin.rendering.template.JavalinThymeleaf;
+import io.javalin.rendering.template.JavalinThymeleaf;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
@@ -23,6 +23,7 @@ public final class App {
     }
 
     // Javalin поддерживает работу с шаблонизатором thymeleaf
+    // Настраиваем шаблонизатор
     private static TemplateEngine getTemplateEngine() {
         // Создаём инстанс движка шаблонизатора
         TemplateEngine templateEngine = new TemplateEngine();
@@ -48,18 +49,16 @@ public final class App {
         // При помощи методов routes() и path() маршруты можно группировать
 
         // BEGIN
-        app.routes(() -> {
-            path("articles", () -> {
-                get(ArticleController.listArticles);
-                get("{id}", ArticleController.showArticle);
-                get("new", ArticleController.newArticle);
-                post(ArticleController.createArticle);
-                get("{id}/edit", ArticleController.editArticle);
-                post("{id}/edit", ArticleController.updateArticle);
-                get("{id}/delete", ArticleController.deleteArticle);
-                post("{id}/delete", ArticleController.destroyArticle);
-            });
-        });
+        app.routes(() -> path("articles", () -> {
+            get(ArticleController.listArticles);
+            get("new", ArticleController.newArticle);
+            get("/{id}", ArticleController.showArticle);
+            post(ArticleController.createArticle);
+            get("/{id}/edit", ArticleController.editArticle);
+            post("/{id}/edit", ArticleController.updateArticle);
+            get("/{id}/delete", ArticleController.deleteArticle);
+            post("/{id}/delete", ArticleController.destroyArticle);
+        }));
         // END
     }
 
@@ -68,9 +67,9 @@ public final class App {
         // Создаём приложение
         Javalin app = Javalin.create(config -> {
             // Включаем логгирование
-            config.enableDevLogging();
+            config.plugins.enableDevLogging();
             // Подключаем настроенный шаблонизатор к фреймворку
-            JavalinThymeleaf.configure(getTemplateEngine());
+            JavalinThymeleaf.init(getTemplateEngine());
         });
 
         // Добавляем маршруты в приложение
