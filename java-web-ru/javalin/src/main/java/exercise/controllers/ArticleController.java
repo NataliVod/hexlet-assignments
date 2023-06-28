@@ -54,11 +54,9 @@ public final class ArticleController {
 
     public static Handler showArticle = ctx -> {
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
-
         Article article = new QArticle()
             .id.equalTo(id)
             .findOne();
-
         ctx.attribute("article", article);
         ctx.render("articles/show.html");
     };
@@ -66,30 +64,34 @@ public final class ArticleController {
     public static Handler editArticle = ctx -> {
         // BEGIN
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
+        List<Category> categories = new QCategory().findList();
         Article article = new QArticle()
                 .id.equalTo(id)
                 .findOne();
-        List<Category> categories = new QCategory().findList();
-        ctx.attribute("categories", categories);
         ctx.attribute("article", article);
+        ctx.attribute("categories", categories);
         ctx.render("articles/edit.html");
         // END
     };
 
     public static Handler updateArticle = ctx -> {
         // BEGIN
-        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
         String title = ctx.formParam("title");
         String body = ctx.formParam("body");
-        long category_Id = ctx.formParamAsClass("categoryId", Long.class).getOrDefault(null);
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
+        long categoryId = ctx.formParamAsClass("categoryId", Long.class).getOrDefault(null);
+        Category category = new QCategory()
+                .id.equalTo(categoryId)
+                .findOne();
+
         new QArticle()
                 .id.equalTo(id)
                 .asUpdate()
                 .set("title", title)
                 .set("body", body)
-                .set("category_Id", category_Id)
+                .set("category", category.getId())
                 .update();
-        ctx.sessionAttribute("flash", "Статья успешно создана");
+        ctx.sessionAttribute("flash", "Статья успешно отредактирована");
         ctx.redirect("/articles");
         // END
     };
