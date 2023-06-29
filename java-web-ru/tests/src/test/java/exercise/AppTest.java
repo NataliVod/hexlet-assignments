@@ -75,16 +75,16 @@ class AppTest {
     @Test
     void testCreateUser() {
 
-        HttpResponse<String> responsePost = Unirest
+        HttpResponse<String> response = Unirest
 
-                .post(baseUrl + "/users/create")
+                .post(baseUrl + "/users")
                 .field("firstName", "John")
                 .field("lastName", "Smith")
                 .field("email", "johnsmith@mail.com")
                 .field("password", "1234")
                 .asString();
 
-        assertThat(responsePost.getStatus()).isEqualTo(302);
+        assertThat(response.getStatus()).isEqualTo(302);
         User actualUser = new QUser()
                 .firstName.equalTo("John")
                 .lastName.equalTo("Smith")
@@ -96,21 +96,21 @@ class AppTest {
     @Test
     void testFailCreateUser() {
 
-        HttpResponse<String> responsePost = Unirest
+        HttpResponse<String> response = Unirest
 
-                .post(baseUrl + "/users/create")
+                .post(baseUrl + "/users")
                 .field("firstName", "")
                 .field("lastName", "")
                 .field("email", "johnsmithmail.com")
                 .field("password", "12")
                 .asString();
 
-        assertThat(responsePost.getStatus()).isEqualTo(422);
-        String content = responsePost.getBody();
-        assertThat(content).contains("Имя не должно быть пустым")
-                .contains("Фамилия не должна быть пустой")
-                .contains("Должно быть валидным email")
-                .contains("Пароль должен содержать не менее 4 символов");
+        assertThat(response.getStatus()).isEqualTo(422);
+        String content = response.getBody();
+        assertThat(content).contains("Имя не должно быть пустым");
+        assertThat(content).contains("Фамилия не должна быть пустой");
+        assertThat(content).contains("Должно быть валидным email");
+        assertThat(content).contains("Пароль должен содержать не менее 4 символов");
     }
     // END
 }
