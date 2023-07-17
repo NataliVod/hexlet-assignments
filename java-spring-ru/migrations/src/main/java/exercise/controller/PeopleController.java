@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/people")
 @RequiredArgsConstructor
 public class PeopleController {
 
@@ -21,7 +20,7 @@ public class PeopleController {
     private final JdbcTemplate jdbc;
 
 
-    @PostMapping(path = "")
+    @PostMapping(path = "/people")
     public void createPerson(@RequestBody Map<String, Object> person) {
         String query = "INSERT INTO person (first_name, last_name) VALUES (?, ?)";
         jdbc.update(query, person.get("first_name"), person.get("last_name"));
@@ -36,8 +35,9 @@ public class PeopleController {
 
     @GetMapping(path = "/people/{id}", produces = "application/json")
     public Map<String, Object> getPerson(@PathVariable long id) {
-        String query = "SELECT * FROM WHERE id = ?";
+        String query = "SELECT * FROM person WHERE id = ?";
         return jdbc.queryForMap(query, id);
     }
+
     // END
 }

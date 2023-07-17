@@ -24,6 +24,10 @@ databaseChangeLog:
                 -  column:
                      name:  first_name
                      type:  varchar(250)
+                     constraints:
+                      nullable: false
                 -  column:
                      name:  last_name
-                     type:  varchar(250)
+                     type:  varchar(50)
+                     constraints:
+                       nullable: false
