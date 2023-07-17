@@ -1,7 +1,7 @@
 package exercise.controller;
 
 import exercise.model.Person;
-import exercise.dto.PersonDto;
+//import exercise.dto.PersonDto;
 import exercise.repository.PersonRepository;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +47,6 @@ public class PeopleController {
     public void updatePerson(@PathVariable long id, @RequestBody Person person) {
         person.setId(id);
         this.personRepository.save(person);
-        }
+    }
     // END
 }
