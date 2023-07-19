@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ArticleDto {
     private String name;
     private String body;
-    private String category;
+    private Category category;
 }
 
 // END
