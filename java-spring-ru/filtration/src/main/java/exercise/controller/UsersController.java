@@ -29,12 +29,12 @@ public class UsersController {
 
 
     @GetMapping(path = "")
-    public Iterable<User> getUserByName(
+    public Iterable<User> getUsers(
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
 
         List<Specification> specifications = new ArrayList<>();
-        if (firstName != null ) {
+        if (firstName != null) {
             specifications.add(new UserSpecification(new SearchCriteria<String>("firstName", firstName)));
         }
 
@@ -58,11 +58,6 @@ public class UsersController {
     }
 
 
-
-   // public Iterable<User> getUserByName (@QuerydslPredicate(root = User.class) Predicate predicate) {
-   //     return userRepository.findAll(predicate);
-   // }
-
-    // END
+      // END
 }
 
