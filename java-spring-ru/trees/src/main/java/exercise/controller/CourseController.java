@@ -31,10 +31,10 @@ public class CourseController {
     }
 
     // BEGIN
-    @GetMapping(path = "/{id}/previous/")
+    @GetMapping(path = "/{id}/previous")
     public Iterable<Course> getPreviousCourses(@PathVariable long id) {
         String path = courseRepository.findById(id).getPath();
-        if (path != null && !("").equals(path)) {
+        if (path != null && !path.isEmpty()) {
             List<Long> ids = Arrays.stream(path.split("\\."))
                     .map(x -> (Long.parseLong(x)))
                     .collect(Collectors.toList());
