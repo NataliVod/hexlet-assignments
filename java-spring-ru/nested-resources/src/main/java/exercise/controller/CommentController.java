@@ -7,9 +7,14 @@ import exercise.model.Post;
 import exercise.repository.PostRepository;
 import exercise.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 
 @RestController
@@ -22,7 +27,6 @@ public class CommentController {
     private final PostRepository postRepository;
 
     // BEGIN
-
     @GetMapping(path = "{postId}/comments")
     public Iterable<Comment> getAllCommentsForPost(@PathVariable(name = "postId") Long postId) {
 
@@ -31,7 +35,7 @@ public class CommentController {
 
     @GetMapping(path = "{postId}/comments/{commentId}")
     public Comment getCommentForPost(@PathVariable(name = "commentId") Long commentId,
-                              @PathVariable(name = "postId") Long postId) {
+                                     @PathVariable(name = "postId") Long postId) {
 
         return commentRepository.findByIdAndPostId(commentId, postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
@@ -39,7 +43,7 @@ public class CommentController {
 
     @PostMapping(path = "{postId}/comments")
     public void createCommentForPost(@PathVariable(name = "postId") Long postId,
-                                           @RequestBody CommentDto commentDto) {
+                                     @RequestBody CommentDto commentDto) {
 
         Post post = postRepository.findById(postId).
                 orElseThrow(() -> new ResourceNotFoundException("Post not found"));
@@ -52,8 +56,8 @@ public class CommentController {
 
     @PatchMapping(path = "{postId}/comments/{commentId} ")
     public void updateComment(@PathVariable(name = "postId") Long postId,
-                                 @PathVariable(name = "commentId") Long commentId,
-                                 @RequestBody CommentDto commentDto) {
+                              @PathVariable(name = "commentId") Long commentId,
+                              @RequestBody CommentDto commentDto) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
@@ -65,10 +69,9 @@ public class CommentController {
     public void deleteComment(@PathVariable(name = "postId") Long postId,
                               @PathVariable(name = "commentId") Long commentId) {
 
-       Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
+        Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
         commentRepository.delete(comment);
     }
-
     // END
 }
