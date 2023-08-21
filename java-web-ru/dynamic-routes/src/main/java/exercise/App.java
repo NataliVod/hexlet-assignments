@@ -1,12 +1,10 @@
 package exercise;
 
-import com.github.javafaker.Company;
 import io.javalin.Javalin;
 import io.javalin.http.NotFoundResponse;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 // BEGIN
 
@@ -23,7 +21,6 @@ public final class App {
         });
 
         // BEGIN
-
         app.get("/companies/{id}", ctx -> {
             var companyNumber = ctx.pathParamAsClass("id", String.class).getOrDefault(null);
 
@@ -54,6 +51,5 @@ public final class App {
     public static void main(String[] args) {
         Javalin app = getApp();
         app.start(7070);
-
     }
 }
