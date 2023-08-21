@@ -17,7 +17,7 @@ class AppTest {
     @BeforeAll
     public static void beforeAll() {
         app = App.getApp();
-        app.start(8000);
+        app.start(0);
         int port = app.port();
         baseUrl = "http://localhost:" + port;
     }
