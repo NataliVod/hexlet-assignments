@@ -20,10 +20,7 @@ public final class App {
             int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
             int per = ctx.queryParamAsClass("per", Integer.class).getOrDefault(5);
 
-            var users = USERS.stream()
-                    .skip((page - 1) * per)
-                    .limit(per)
-                    .collect(Collectors.toList());
+            var users = USERS.subList((page - 1) * per, ((page - 1) * per) + per);
 
             ctx.json(users);
         });
