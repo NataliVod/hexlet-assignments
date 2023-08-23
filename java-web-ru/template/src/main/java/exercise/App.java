@@ -21,7 +21,7 @@ public final class  App {
 
         // BEGIN
         app.get("/users/{id}", ctx -> {
-            var userNumber = ctx.pathParamAsClass("id", Integer.class).getOrDefault(-1);
+            var userNumber = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
 
             var user = USERS.stream()
                     .filter(x -> x.getId() == userNumber)
