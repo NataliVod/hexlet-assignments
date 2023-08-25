@@ -1,11 +1,7 @@
 package exercise;
 
-import gg.jte.ContentType;
-import gg.jte.TemplateEngine;
-import gg.jte.resolve.DirectoryCodeResolver;
-import io.javalin.Javalin;
 
-import java.nio.file.Path;
+import io.javalin.Javalin;
 import java.util.List;
 import io.javalin.http.NotFoundResponse;
 import exercise.model.User;
