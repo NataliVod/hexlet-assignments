@@ -1,5 +1,4 @@
 <!-- BEGIN -->
-
 @import gg.jte.Content
 @param Content content
 @param Content footer = null

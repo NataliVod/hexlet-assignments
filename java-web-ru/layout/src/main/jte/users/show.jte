@@ -1,7 +1,6 @@
 <!-- BEGIN -->
 @import exercise.dto.users.UserPage
 @param UserPage page
-@import exercise.App
 
 @template.layout.page(
 content = @`
@@ -13,5 +12,4 @@ footer = @`
     <p>Thanks for visiting, come again soon!</p>
 `
 )
-
 <!-- END -->

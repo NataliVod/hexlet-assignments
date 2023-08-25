@@ -1,6 +1,5 @@
 package exercise;
 
-
 import io.javalin.Javalin;
 import java.util.List;
 import io.javalin.http.NotFoundResponse;
