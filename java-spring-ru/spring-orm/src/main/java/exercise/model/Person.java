@@ -14,7 +14,6 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private long id;
 
     // BEGIN
