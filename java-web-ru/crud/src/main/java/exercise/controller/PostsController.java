@@ -17,11 +17,16 @@ public class PostsController {
     public static void index(Context ctx) {
         var posts = PostRepository.getEntities();
         var pageNumber = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
-        if (pageNumber == 0) {pageNumber = 1; }
 
         var per = 5;
         var firstPost = (pageNumber - 1) * per  ;
-        var pagedPosts = posts.subList(firstPost, firstPost + per);
+        List<Post> pagedPosts;
+
+        try {
+           pagedPosts = posts.subList(firstPost, firstPost + per);
+        } catch (IndexOutOfBoundsException e) {
+           pagedPosts = new ArrayList<>();
+        }
 
         var page = new PostsPage(pagedPosts, pageNumber);
         ctx.render("posts/index.jte", Collections.singletonMap("page", page));
