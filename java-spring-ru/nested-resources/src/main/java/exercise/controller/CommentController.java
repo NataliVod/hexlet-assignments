@@ -42,16 +42,18 @@ public class CommentController {
     }
 
     @PostMapping(path = "{postId}/comments")
-    public void createCommentForPost(@PathVariable(name = "postId") Long postId,
+    public Iterable<Comment> createCommentForPost(@PathVariable(name = "postId") Long postId,
                                      @RequestBody CommentDto commentDto) {
 
         Post post = postRepository.findById(postId).
-                orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+                orElseThrow(() -> new ResourceNotFoundException("404"));
 
         Comment comment = new Comment();
         comment.setPost(post);
         comment.setContent(commentDto.content());
         commentRepository.save(comment);
+        return commentRepository.findAllByPostId(postId);
+
     }
 
     @PatchMapping(path = "{postId}/comments/{commentId} ")
@@ -60,7 +62,7 @@ public class CommentController {
                               @RequestBody CommentDto commentDto) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("404"));
         comment.setContent(commentDto.content());
         commentRepository.save(comment);
     }
@@ -70,7 +72,7 @@ public class CommentController {
                               @PathVariable(name = "commentId") Long commentId) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("404"));
         commentRepository.delete(comment);
     }
     // END
