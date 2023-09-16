@@ -62,9 +62,10 @@ public class CommentController {
                               @RequestBody CommentDto commentDto) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("404"));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
         comment.setContent(commentDto.content());
        return commentRepository.save(comment);
+
     }
 
     @DeleteMapping(path = "{postId}/comments/{commentId}")
