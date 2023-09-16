@@ -28,7 +28,7 @@ public class CommentController {
 
     // BEGIN
     @GetMapping(path = "{postId}/comments")
-    public Iterable<Comment> getAllCommentsForPost(@PathVariable(name = "postId") Long postId) {
+        public Iterable<Comment> getAllCommentsForPost(@PathVariable(name = "postId") Long postId) {
 
         return commentRepository.findAllByPostId(postId);
     }
@@ -38,7 +38,7 @@ public class CommentController {
                                      @PathVariable(name = "postId") Long postId) {
 
         return commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     @PostMapping(path = "{postId}/comments")
@@ -46,7 +46,7 @@ public class CommentController {
                                      @RequestBody CommentDto commentDto) {
 
         Post post = postRepository.findById(postId).
-                orElseThrow(() -> new ResourceNotFoundException("404"));
+                orElseThrow(() -> new ResourceNotFoundException("not found"));
 
         Comment comment = new Comment();
         comment.setPost(post);
@@ -56,13 +56,13 @@ public class CommentController {
 
     }
 
-    @PatchMapping(path = "{postId}/comments/{commentId} ")
-    public Comment updateComment(@PathVariable(name = "postId") Long postId,
-                              @PathVariable(name = "commentId") Long commentId,
+    @PatchMapping(path = "{postId}/comments/{commentId}")
+    public Comment updateComment(@PathVariable Long postId,
+                              @PathVariable Long commentId,
                               @RequestBody CommentDto commentDto) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
         comment.setContent(commentDto.content());
        return commentRepository.save(comment);
 
@@ -73,7 +73,7 @@ public class CommentController {
                               @PathVariable(name = "commentId") Long commentId) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
-                .orElseThrow(() -> new ResourceNotFoundException("404"));
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
         commentRepository.delete(comment);
     }
     // END
