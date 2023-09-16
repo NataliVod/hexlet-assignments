@@ -15,13 +15,22 @@ public class MyApplicationConfig {
 
     @Bean
     public Daytime getDaytime() {
-        var time = LocalDateTime.now().getHour();
-        return switch (time) {
-        case 6, 7 , 8, 9, 10 ,11 -> new Morning();
-        case 12, 13, 14, 15, 16, 17 -> new Day();
-        case 18, 19, 20, 21, 22 -> new Evening();
-            default -> new Night();
-        };
+        int hour = LocalDateTime.now().getHour();
+
+        if (hour >= 6 && hour < 12) {
+            return new Morning();
+        }
+
+        if (hour >= 12 && hour < 18) {
+            return new Day();
+        }
+
+        if (hour >= 18 && hour < 23) {
+            return new Evening();
+        }
+
+        return new Night();
+
     }
 }
 // END
