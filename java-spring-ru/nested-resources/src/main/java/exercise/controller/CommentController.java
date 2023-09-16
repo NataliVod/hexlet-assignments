@@ -57,14 +57,14 @@ public class CommentController {
     }
 
     @PatchMapping(path = "{postId}/comments/{commentId} ")
-    public void updateComment(@PathVariable(name = "postId") Long postId,
+    public Comment updateComment(@PathVariable(name = "postId") Long postId,
                               @PathVariable(name = "commentId") Long commentId,
                               @RequestBody CommentDto commentDto) {
 
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
                 .orElseThrow(() -> new ResourceNotFoundException("404"));
         comment.setContent(commentDto.content());
-        commentRepository.save(comment);
+       return commentRepository.save(comment);
     }
 
     @DeleteMapping(path = "{postId}/comments/{commentId}")
