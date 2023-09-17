@@ -27,21 +27,27 @@ public class WeatherService {
     }
 
     // BEGIN
-    public Map<String, String> getWeather (String city){
-        String request = "http://weather/api/v2/cities/" + city;
-        String response = client.get(request);
+    public Map<String, String> lookUp(long id) {
+
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> new CityNotFoundException("City not found"));
+
+        String cityName = city.getName();
+        String url = "http://weather/api/v2/cities/" + cityName;
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> weather;
+
+        String responce = client.get(url);
+
+        Map<String, String> result;
 
         try {
-           weather = mapper.readValue(response, Map.class);
-        } catch (JsonProcessingException e) {
+            result = mapper.readValue(responce, Map.class);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return weather;
+        return result;
     }
-
     // END
 }
