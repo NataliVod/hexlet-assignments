@@ -29,15 +29,21 @@ class App {
 
         try {
             minThread.join();
+            LOGGER.info("Thread minTread finished");
+
             maxThread.join();
+            LOGGER.info("Thread maxTread finished");
+
         } catch (InterruptedException e) {
             System.out.println("Поток был прерван");
         }
-        LOGGER.info("Thread minTread finished");
-        LOGGER.info("Thread maxTread finished");
 
-        result.put("min", minThread.getMinNumber());
-        result.put("max", maxThread.getMaxNumber());
+       result = Map.of(
+                "min", minThread.getMinNumber(),
+                "max", maxThread.getMaxNumber()
+        );
+
+        LOGGER.log(Level.INFO, "Result: " + result.toString());
 
         return result;
     }

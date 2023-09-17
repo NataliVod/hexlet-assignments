@@ -18,6 +18,7 @@ public class MaxThread extends Thread {
 
     @Override
     public void run() {
+       var max = numbers.
     maxNumber = Arrays.stream(numbers).max().getAsInt();
     }
 }
