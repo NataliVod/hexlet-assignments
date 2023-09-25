@@ -48,6 +48,36 @@ class App {
         });
     }
 
+    private static Path getFullPath(String filePath) {
+        return Paths.get(filePath).toAbsolutePath().normalize();
+    }
+
+    public static CompletableFuture<Long> getDirectorySize(String path) {
+
+        return CompletableFuture.supplyAsync(() -> {
+            Long size;
+            try {
+                size = Files.walk(getFullPath(path), 1)
+                        .filter(Files::isRegularFile)
+                        .mapToLong(p -> {
+                            try {
+                                return Files.size(p);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        })
+                        .sum();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return size;
+
+        }).exceptionally(ex -> {
+            System.out.println("Oops! We have an exception - " + ex.getMessage());
+            return null;
+        });
+    }
+
     // END
 
     public static void main(String[] args) throws Exception {
