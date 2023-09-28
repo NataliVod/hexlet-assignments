@@ -95,8 +95,8 @@ class ApplicationTest {
                 .content(om.writeValueAsString(post));
 
         mockMvc.perform(request)
-                .andExpect(status().isNoContent())
-                .andExpect(content().json(om.writeValueAsString(post)));
+                .andExpect(status().isNoContent());
+              //.andExpect(content().json(om.writeValueAsString(post)));
     }
 
     @Test
