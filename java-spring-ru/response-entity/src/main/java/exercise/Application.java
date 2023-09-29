@@ -1,6 +1,5 @@
 package exercise;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public class Application {
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<Post> create(@RequestBody Post post)  {
+    public ResponseEntity<Post> create(@RequestBody Post post) {
         posts.add(post);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(post);
@@ -57,7 +56,7 @@ public class Application {
             post.setBody(data.getBody());
             return ResponseEntity.ok(post);
         } else {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(data);
         }
     }
 
