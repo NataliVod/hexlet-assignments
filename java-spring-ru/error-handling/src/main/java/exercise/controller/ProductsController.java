@@ -37,7 +37,21 @@ public class ProductsController {
     }
 
     // BEGIN
-    
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Product update(@PathVariable long id, @RequestBody Product data) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
+        product.setPrice(data.getPrice());
+        product.setTitle(data.getTitle());
+        return productRepository.save(product);
+    }
+
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Product getProduct(@PathVariable long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
+        return product;
+    }
     // END
 
     @DeleteMapping(path = "/{id}")
