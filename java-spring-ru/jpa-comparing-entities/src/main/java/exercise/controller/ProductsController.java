@@ -34,12 +34,12 @@ public class ProductsController {
     // BEGIN
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product create(@RequestBody Product product) {
-        if (productRepository.findById(product.getId()).equals(product)) {
+    public Product create(@RequestBody Product data) {
+        if (productRepository.findAll().contains(data)) {
             throw new ResourceAlreadyExistsException("Product already exists");
         }
 
-        return productRepository.save(product);
+        return productRepository.save(data);
     }
     // END
 
