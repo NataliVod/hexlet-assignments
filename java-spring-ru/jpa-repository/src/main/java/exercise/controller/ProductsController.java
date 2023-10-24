@@ -23,18 +23,12 @@ public class ProductsController {
 
     // BEGIN
     @GetMapping(path = "")
-    public List<Product> index(@RequestParam(value = "min",required = false) Integer min, @RequestParam(value = "max", required = false) Integer max) {
+    public List<Product> index(@RequestParam(defaultValue = Integer.MIN_VALUE + "") Integer min,
+                               @RequestParam(defaultValue = Integer.MAX_VALUE + "") Integer max)  {
 
         var sort = Sort.by(Sort.Order.asc("price"));
 
-        if (min != null  && max  != null) {
-            return productRepository.findByPriceBetween(min, max, sort);
-        } else if (min != null) {
-            return productRepository.findByPriceGreaterThan(min, sort);
-        } else if (max != null){
-            return productRepository.findByPriceLessThan(max, sort);
-        } else
-            return productRepository.findAll(sort);
+        return productRepository.findByPriceBetween(min, max, sort);
 
     }
 
@@ -43,8 +37,8 @@ public class ProductsController {
     @GetMapping(path = "/{id}")
     public Product show(@PathVariable long id) {
 
-        var product =  productRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
+        var product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
 
         return product;
     }
