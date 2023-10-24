@@ -22,7 +22,7 @@ public class ProductsController {
     private ProductRepository productRepository;
 
     // BEGIN
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public List<Product> index(@RequestParam(value = "min",required = false) Integer min, @RequestParam(value = "max", required = false) Integer max) {
 
         var sort = Sort.by(Sort.Order.asc("price"));
