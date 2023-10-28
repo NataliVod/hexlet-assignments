@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
 import exercise.model.Comment;
 import exercise.repository.CommentRepository;
 import exercise.exception.ResourceNotFoundException;
@@ -30,7 +28,7 @@ public class CommentsController {
     public Comment getComment(@PathVariable long id) {
         return commentRepository.
                 findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("not found"));
+                orElseThrow(() -> new ResourceNotFoundException("Comment with id " + id + " not found"));
     }
 
     @PostMapping(path = "")
@@ -43,7 +41,8 @@ public class CommentsController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     Comment update(@PathVariable long id, @RequestBody Comment data) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found"));
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment with id " + id + " not found"));
         comment.setBody(data.getBody());
         comment.setCreatedAt(data.getCreatedAt());
         comment.setPostId(data.getPostId());

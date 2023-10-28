@@ -1,7 +1,5 @@
 package exercise.controller;
 
-
-import exercise.model.Comment;
 import exercise.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
 
 import exercise.model.Post;
 import exercise.repository.PostRepository;
@@ -37,7 +34,7 @@ public class PostsController {
     public Post getPost(@PathVariable long id) {
         return postRepository.
                 findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("not found"));
+                orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found"));
     }
 
     @PostMapping(path = "")
@@ -50,7 +47,8 @@ public class PostsController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     Post update(@PathVariable long id, @RequestBody Post data) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found"));
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found"));
         post.setBody(data.getBody());
         post.setCreatedAt(data.getCreatedAt());
         post.setTitle(data.getTitle());
